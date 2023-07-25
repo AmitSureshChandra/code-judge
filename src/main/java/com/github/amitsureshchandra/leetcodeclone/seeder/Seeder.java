@@ -1,6 +1,7 @@
 package com.github.amitsureshchandra.leetcodeclone.seeder;
 
 import com.github.amitsureshchandra.leetcodeclone.dto.core.Example;
+import com.github.amitsureshchandra.leetcodeclone.dto.core.TestCase;
 import com.github.amitsureshchandra.leetcodeclone.entity.Question;
 import com.github.amitsureshchandra.leetcodeclone.enums.Difficulty;
 import com.github.amitsureshchandra.leetcodeclone.enums.Tag;
@@ -53,6 +54,15 @@ public class Seeder {
                 Arrays.asList(
                         "-2^31 <= n1 <= 2^31-1",
                         "-2^31 <= n2 <= 2^31-1"
+                )
+        );
+
+        q.setTestCases(
+                Arrays.asList(
+                        new TestCase("10\n20", false, "30"),
+                        new TestCase("-1\n20", false, "19"),
+                        new TestCase("10\n-1", false, "9"),
+                        new TestCase("-10\n-1", false, "-11")
                 )
         );
 
