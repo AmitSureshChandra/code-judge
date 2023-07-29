@@ -7,7 +7,7 @@ class Solution {
 
         try {
             for (int i = 0; i < testCases; i++) {
-                int ans = sol.add(sc.nextInt(), sc.nextInt());
+                long ans = sol.factorial(sc.nextInt());
                 int expected = sc.nextInt();
                 if(ans != expected) throw new RuntimeException(String.valueOf(i+1) + "~" + ans + "~" + expected);
             }

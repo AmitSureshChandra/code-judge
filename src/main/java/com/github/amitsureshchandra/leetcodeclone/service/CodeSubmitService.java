@@ -1,9 +1,7 @@
 package com.github.amitsureshchandra.leetcodeclone.service;
 
 import com.github.amitsureshchandra.leetcodeclone.dto.core.TestCase;
-import com.github.amitsureshchandra.leetcodeclone.dto.external.OutputResp;
 import com.github.amitsureshchandra.leetcodeclone.dto.req.CodeSubmitReq;
-import com.github.amitsureshchandra.leetcodeclone.dto.resp.TestCaseResp;
 import com.github.amitsureshchandra.leetcodeclone.entity.Question;
 import com.github.amitsureshchandra.leetcodeclone.repo.QuestionRepo;
 import com.github.amitsureshchandra.leetcodeclone.service.util.FileUtil;
@@ -11,7 +9,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

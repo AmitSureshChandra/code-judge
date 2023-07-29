@@ -1,6 +1,7 @@
 package com.github.amitsureshchandra.leetcodeclone.seeder;
 
 import com.github.amitsureshchandra.leetcodeclone.dto.core.Example;
+import com.github.amitsureshchandra.leetcodeclone.dto.core.SampleCode;
 import com.github.amitsureshchandra.leetcodeclone.dto.core.TestCase;
 import com.github.amitsureshchandra.leetcodeclone.entity.Question;
 import com.github.amitsureshchandra.leetcodeclone.enums.Difficulty;
@@ -36,6 +37,11 @@ public class Seeder {
     }
 
     private void seedQuestions() {
+        seedAddTwoNumber();
+        seedFactorialQuestion();
+    }
+
+    private void seedAddTwoNumber() {
         Question q = new Question();
 
         q.setTitle("addition of 2 numbers");
@@ -66,6 +72,55 @@ public class Seeder {
                 )
         );
 
+        q.setSampleCodes(Arrays.asList(
+                new SampleCode(
+                    "class Problem  { \nint add(int n1, int n2) { \n// write code here \n } \n} ",
+                    "jdk8"
+                )
+        ));
+
+        questionRepo.save(q);
+    }
+
+    private void seedFactorialQuestion() {
+        // factorial question
+
+        Question q = new Question();
+
+        q.setTitle("factorial of number");
+        q.setCode("factorial");
+        q.setDescription("factorial of number");
+        q.setTags(Arrays.asList(Tag.ARITHMETIC, Tag.MATH));
+        q.setDifficulty(Difficulty.BASIC);
+        q.setExamples(
+                Arrays.asList(
+                        new Example("5", "120", "factorial of 5 is 120"),
+                        new Example("3", "6", "factorial of 3 is 6")
+                )
+        );
+
+        q.setConstraints(
+                Arrays.asList(
+                        "0 <= n1 <= 10"
+                )
+        );
+
+        q.setTestCases(
+                Arrays.asList(
+                        new TestCase("0", false, "1"),
+                        new TestCase("1", false, "1"),
+                        new TestCase("6", false, "720"),
+                        new TestCase("5", false, "120")
+                )
+        );
+
+
+        q.setSampleCodes(Arrays.asList(
+                new SampleCode(
+                        "class Problem  { \nlong factorial(int n) { \n// write code here \n } \n} ",
+                        "jdk8"
+                )
+        ));
         questionRepo.save(q);
     }
 }

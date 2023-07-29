@@ -1,6 +1,7 @@
 package com.github.amitsureshchandra.leetcodeclone.dto.question;
 
 import com.github.amitsureshchandra.leetcodeclone.dto.core.Example;
+import com.github.amitsureshchandra.leetcodeclone.dto.core.SampleCode;
 import com.github.amitsureshchandra.leetcodeclone.dto.core.TestCase;
 import com.github.amitsureshchandra.leetcodeclone.enums.Difficulty;
 import com.github.amitsureshchandra.leetcodeclone.enums.Tag;
@@ -22,4 +23,6 @@ public class QuestionDetailDto {
     private List<Tag> tags;
     private List<String> constraints = new ArrayList<>();
     private List<TestCase> testCases = new ArrayList<>();
+    private List<SampleCode> sampleCodes = new ArrayList<>();
+
 }
