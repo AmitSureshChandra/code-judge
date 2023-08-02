@@ -1,5 +1,6 @@
 package com.github.amitsureshchandra.leetcodeclone.entity;
 
+import com.github.amitsureshchandra.leetcodeclone.dto.core.SampleCode;
 import com.github.amitsureshchandra.leetcodeclone.dto.core.Example;
 import com.github.amitsureshchandra.leetcodeclone.dto.core.TestCase;
 import com.github.amitsureshchandra.leetcodeclone.enums.Difficulty;
@@ -35,4 +36,7 @@ public class Question {
     private List<String> constraints = new ArrayList<>();
     @ElementCollection
     private List<TestCase> testCases = new ArrayList<>();
+
+    @ElementCollection
+    private List<SampleCode> sampleCodes = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package com.github.amitsureshchandra.leetcodeclone.service;
 
+import com.github.amitsureshchandra.leetcodeclone.dto.question.QuestionDetailDto;
 import com.github.amitsureshchandra.leetcodeclone.dto.question.QuestionListDto;
 import com.github.amitsureshchandra.leetcodeclone.entity.Question;
 import com.github.amitsureshchandra.leetcodeclone.repo.QuestionRepo;
@@ -29,5 +30,9 @@ public class QuestionService {
 
     public Question findByCode(String code) {
         return questionRepo.findByCode(code).orElseThrow(() -> new RuntimeException("question not exists"));
+    }
+
+    public QuestionDetailDto fetchByCode(String code) {
+        return modelMapper.map(findByCode(code), QuestionDetailDto.class);
     }
 }
