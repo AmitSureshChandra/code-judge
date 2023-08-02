@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.amitsureshchandra.leetcodeclone.dto.external.OutputResp;
 import com.github.amitsureshchandra.leetcodeclone.dto.req.CodeRunReq;
 import com.github.amitsureshchandra.leetcodeclone.dto.resp.TestCaseResp;
+import com.github.amitsureshchandra.leetcodeclone.service.util.AuthUtil;
 import com.github.amitsureshchandra.leetcodeclone.service.util.FileUtil;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class CodeRunService {
@@ -25,17 +27,23 @@ public class CodeRunService {
 
     final RestTemplate restTemplate;
 
-    public CodeRunService(CommonCodeService commonCodeService, FileUtil fileUtil, ObjectMapper objectMapper, ResourceLoader resourceLoader, RestTemplate restTemplate) {
+    final UserService userService;
+
+    public CodeRunService(CommonCodeService commonCodeService, FileUtil fileUtil, ObjectMapper objectMapper, ResourceLoader resourceLoader, RestTemplate restTemplate, UserService userService) {
         this.commonCodeService = commonCodeService;
         this.fileUtil = fileUtil;
         this.objectMapper = objectMapper;
         this.resourceLoader = resourceLoader;
         this.restTemplate = restTemplate;
+        this.userService = userService;
     }
 
-    public Object run(String code, CodeRunReq dto) throws IOException {
-        // prepare input file
+    public Object run(String code, CodeRunReq dto, UUID token) throws IOException {
 
+        // check auth
+        userService.checkAuth(token);
+
+        // prepare input file
         StringBuilder input = new StringBuilder();
 
         // first line will be no of test cases

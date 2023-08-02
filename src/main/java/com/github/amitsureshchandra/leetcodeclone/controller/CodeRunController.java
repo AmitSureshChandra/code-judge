@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/run/questions")
@@ -20,7 +21,7 @@ public class CodeRunController {
     }
 
     @PostMapping("/{code}")
-    Object run(@PathVariable String code, @RequestBody @Valid CodeRunReq dto) throws IOException {
-        return codeRunService.run(code, dto);
+    Object run(@PathVariable String code, @RequestBody @Valid CodeRunReq dto, @RequestHeader(name = "Authorization") UUID token) throws IOException {
+        return codeRunService.run(code, dto, token);
     }
 }
