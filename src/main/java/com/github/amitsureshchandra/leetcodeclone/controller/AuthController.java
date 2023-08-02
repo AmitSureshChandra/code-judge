@@ -29,7 +29,7 @@ public class AuthController {
         return authService.login(loginReq);
     }
 
-    @PostMapping
+    @PostMapping("/logout")
     void logout(@RequestHeader(name = "Authorization") UUID token) {
         authService.logout(token);
     }
