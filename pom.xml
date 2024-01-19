@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.amitsureshchandra</groupId>
-    <artifactId>leetcode-clone</artifactId>
+    <artifactId>code-judge</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>leetcode-clone</name>
-    <description>leetcode-clone</description>
+    <name>code-judge</name>
+    <description>code-judge</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
