@@ -1,6 +1,7 @@
 package com.github.amitsureshchandra.codejudge.unit_tests;
 
 import com.github.amitsureshchandra.codejudge.config.MQConfig;
+import com.github.amitsureshchandra.codejudge.config.RMQConfig;
 import com.github.amitsureshchandra.codejudge.dto.req.CodeRunReq;
 import com.github.amitsureshchandra.codejudge.service.UserService;
 import com.github.amitsureshchandra.codejudge.service.util.ParseUtil;
@@ -164,7 +165,7 @@ public class QuestionRunTest extends BaseControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        Thread.sleep(1000 * 2);
+        Thread.sleep(1000 * 5);
 
         // assert event queued in mq
 

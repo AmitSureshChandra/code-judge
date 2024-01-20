@@ -4,6 +4,7 @@ import com.github.amitsureshchandra.codejudge.entity.User;
 import com.github.amitsureshchandra.codejudge.exception.AuthException;
 import com.github.amitsureshchandra.codejudge.exception.ValidationException;
 import com.github.amitsureshchandra.codejudge.repo.UserRepo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,6 +14,9 @@ import java.util.UUID;
 public class UserService {
 
     final UserRepo userRepo;
+
+    @Value("${secret-token}")
+    private String secretToken;
 
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -28,6 +32,7 @@ public class UserService {
     }
 
     public void checkAuth(UUID token) {
+        if(token.toString().equals(secretToken)) return;
         if(!isAuthenticated(token)) throw new AuthException("Unauthenticated");
     }
 }

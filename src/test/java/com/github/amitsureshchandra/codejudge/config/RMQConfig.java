@@ -11,17 +11,14 @@ import org.springframework.context.annotation.Profile;
 @Profile("mq_test")
 @Configuration
 public class RMQConfig {
-    public final static String queueName = "code-queue";
-    public final static String exchangeName = "exchange";
-
     @Bean
     Queue codeQueue() {
-        return new Queue(queueName);
+        return new Queue(MQConfig.queueName);
     }
 
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(exchangeName);
+        return new TopicExchange(MQConfig.exchangeName);
     }
 
     @Bean
