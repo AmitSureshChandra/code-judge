@@ -37,26 +37,18 @@ public class CodeRunService {
         this.userService = userService;
     }
 
-    public Object run(String code, CodeRunReq dto, UUID token) throws IOException {
+    public Object run(String qCode, CodeRunReq dto, UUID token) throws IOException {
 
         // check auth
         userService.checkAuth(token);
 
-        // prepare input file
-        StringBuilder input = new StringBuilder();
-
-        // first line will be no of test cases
-        input.append(dto.getTestCases().size()).append("\n");
-
-        dto.getTestCases().forEach(testCase -> input.append(testCase).append("\n"));
+        String input = prepareInput(dto.getTestCases());
 
         // prepare code with driver
-
-        String content = fileUtil.readFileContent(getRunDriverPath(code, dto.getCompiler())) +
-                "\n" + dto.getCode();
+        String content = prepareCode(qCode, dto.getCompiler(), dto.getCode());
 
         // hit api to run code
-        OutputResp outputResp = commonCodeService.runCodeViaApi(input.toString(), content, dto.getCompiler());
+        OutputResp outputResp = commonCodeService.runCodeViaApi(input, content, dto.getCompiler());
 
         // split on \n
         // check if line starts with 'F' then test case is failed
@@ -77,6 +69,23 @@ public class CodeRunService {
         }
 
         return resp;
+    }
+
+    public String prepareCode(String qCode, String compiler, String sourceCode) throws IOException {
+        // appends driver code with source-code of req
+        return fileUtil.readFileContent(getRunDriverPath(qCode, compiler)) + "\n" + sourceCode;
+    }
+
+    public String prepareInput(List<String> testCases) {
+        // prepare input file
+        StringBuilder input = new StringBuilder();
+
+        // first line will be no of test cases
+        input.append(testCases.size()).append("\n");
+
+        testCases.forEach(testCase -> input.append(testCase).append("\n"));
+
+        return input.toString();
     }
 
     public String getRunDriverPath(String code, String compiler) throws IOException {

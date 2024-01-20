@@ -1,33 +1,40 @@
 package com.github.amitsureshchandra.codejudge.unit_tests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.amitsureshchandra.codejudge.config.MQConfig;
 import com.github.amitsureshchandra.codejudge.dto.req.CodeRunReq;
 import com.github.amitsureshchandra.codejudge.service.UserService;
+import com.github.amitsureshchandra.codejudge.service.util.ParseUtil;
 import com.github.amitsureshchandra.codejudge.util.BaseControllerTest;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.blankString;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("mq_test")
 public class QuestionRunTest extends BaseControllerTest {
 
     @MockBean
     UserService userService;
 
     @Autowired
-    ObjectMapper objectMapper;
+    RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    ParseUtil parseUtil;
 
     @Test
     void test_code_execution_for_wrong_run() throws Exception {
@@ -45,7 +52,7 @@ public class QuestionRunTest extends BaseControllerTest {
 
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/run/questions/factorial")
-                        .content(objectMapper.writeValueAsBytes(dto))
+                        .content(parseUtil.parseToString(dto))
                         .contentType("application/json")
                         .header("Authorization", UUID.randomUUID())
                         .accept("application/json")
@@ -97,7 +104,7 @@ public class QuestionRunTest extends BaseControllerTest {
 
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/run/questions/factorial")
-                        .content(objectMapper.writeValueAsBytes(dto))
+                        .content(parseUtil.parseToString(dto))
                         .contentType("application/json")
                         .header("Authorization", UUID.randomUUID())
                         .accept("application/json")
@@ -130,12 +137,38 @@ public class QuestionRunTest extends BaseControllerTest {
                 .andExpect(jsonPath("$[3].status", is(true)));
 
     }
-}
 
-class Problem  {
-    long factorial(int n) {
-        int fact = 1;
-        for(int i=1; i<= n; i++) fact *= i;
-        return fact;
+    @Test
+    void test_code_execution_for_async_run() throws Exception {
+        doNothing().when(userService).checkAuth(any());
+
+        CodeRunReq dto = new CodeRunReq(
+                "class Problem  {\n" +
+                        "    long factorial(int n) {\n" +
+                        "        int fact = 1;\n" +
+                        "        for(int i=1; i<= n; i++) fact *= i;\n" +
+                        "        return fact;\n" +
+                        "    }\n" +
+                        "} ",
+                "jdk8",
+                Arrays.asList("0", "1", "6", "5")
+        );
+
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/run/questions/async/factorial")
+                        .content(parseUtil.parseToString(dto))
+                        .contentType("application/json")
+                        .header("Authorization", UUID.randomUUID())
+                        .accept("application/json")
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        Thread.sleep(1000 * 2);
+
+        // assert event queued in mq
+
+        Message msg = rabbitTemplate.receive(MQConfig.queueName);
+        assertNotNull(msg.getBody());
     }
 }

@@ -2,6 +2,9 @@ package com.github.amitsureshchandra.codejudge.config;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -14,6 +17,12 @@ public class Config {
         return new ModelMapper();
     }
 
+    @Bean
+    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
+        RabbitTemplate rTemplate = new RabbitTemplate(connectionFactory);
+        rTemplate.setMessageConverter(messageConverter);
+        return rTemplate;
+    }
     @Bean
     public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
