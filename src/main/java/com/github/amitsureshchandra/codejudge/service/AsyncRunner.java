@@ -28,9 +28,7 @@ public class AsyncRunner {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public String run(String qCode, CodeRunReq dto, UUID token) throws IOException {
-        // check auth
-        userService.checkAuth(token);
+    public String run(String qCode, CodeRunReq dto) throws IOException {
 
         UUID codeExcId = UUID.randomUUID();
 
@@ -44,12 +42,14 @@ public class AsyncRunner {
     }
 
     private void addCodeEventInMQ(UUID codeExcId, String input, String sourceCode, String compiler) {
-        rabbitTemplate.convertAndSend(MQConfig.exchangeName,"code", parseUtil.parseToString(new CodeEventDto(
-                codeExcId.toString(),
-                sourceCode,
-                compiler,
-                input
-        )));
+        rabbitTemplate.convertAndSend(MQConfig.exchangeName,"code", parseUtil.parseToString(
+                new CodeEventDto(
+                        codeExcId.toString(),
+                        sourceCode,
+                        compiler,
+                        input
+                )
+        ));
 
         log.info("event added in mq {}", new CodeEventDto(
                 codeExcId.toString(),

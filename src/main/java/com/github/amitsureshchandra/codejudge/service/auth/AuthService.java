@@ -48,7 +48,6 @@ public class AuthService {
         if(!userOptional.isPresent()) throw new AuthException("Unauthenticated");
         User user = userOptional.get();
         user.setToken(UUID.randomUUID());
-        System.out.println(user);
         userRepo.save(user);
         return new LoginResp(user.getToken().toString());
     }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,9 +19,12 @@ public class QuestionService {
 
     final QuestionRepo questionRepo;
 
-    public QuestionService(ModelMapper modelMapper, QuestionRepo questionRepo) {
+    final UserService userService;
+
+    public QuestionService(ModelMapper modelMapper, QuestionRepo questionRepo, UserService userService) {
         this.modelMapper = modelMapper;
         this.questionRepo = questionRepo;
+        this.userService = userService;
     }
 
     public List<QuestionListDto> fetchAllQuestions(Optional<String> search) {

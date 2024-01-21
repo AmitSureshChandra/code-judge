@@ -37,10 +37,7 @@ public class CodeRunService {
         this.userService = userService;
     }
 
-    public Object run(String qCode, CodeRunReq dto, UUID token) throws IOException {
-
-        // check auth
-        userService.checkAuth(token);
+    public Object run(String qCode, CodeRunReq dto) throws IOException {
 
         String input = prepareInput(dto.getTestCases());
 

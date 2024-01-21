@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class CodeSubmitService {
@@ -23,17 +24,20 @@ public class CodeSubmitService {
 
     final ResourceLoader resourceLoader;
 
-    public CodeSubmitService(QuestionService questionService, CommonCodeService commonCodeService, QuestionRepo questionRepo, FileUtil fileUtil, ResourceLoader resourceLoader) {
+    final UserService userService;
+
+    public CodeSubmitService(QuestionService questionService, CommonCodeService commonCodeService, QuestionRepo questionRepo, FileUtil fileUtil, ResourceLoader resourceLoader, UserService userService) {
         this.questionService = questionService;
         this.commonCodeService = commonCodeService;
         this.questionRepo = questionRepo;
         this.fileUtil = fileUtil;
         this.resourceLoader = resourceLoader;
+        this.userService = userService;
     }
 
     public Object run(String code, CodeSubmitReq dto) throws IOException {
-        // prepare input file
 
+        // prepare input file
         Question q = questionService.findByCode(code);
         List<TestCase> testCases = q.getTestCases();
 

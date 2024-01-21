@@ -23,12 +23,12 @@ public class CodeRunController {
     }
 
     @PostMapping("/{code}")
-    Object run(@PathVariable String code, @RequestBody @Valid CodeRunReq dto, @RequestHeader(name = "Authorization") UUID token) throws IOException {
-        return codeRunService.run(code, dto, token);
+    Object run(@PathVariable String code, @RequestBody @Valid CodeRunReq dto) throws IOException {
+        return codeRunService.run(code, dto);
     }
 
     @PostMapping("/async/{qCode}")
-    MsgResponseDto runAsync(@PathVariable String qCode, @RequestBody @Valid CodeRunReq dto, @RequestHeader(name = "Authorization") UUID token) throws IOException {
-        return new MsgResponseDto(asyncRunner.run(qCode, dto, token));
+    MsgResponseDto runAsync(@PathVariable String qCode, @RequestBody @Valid CodeRunReq dto) throws IOException {
+        return new MsgResponseDto(asyncRunner.run(qCode, dto));
     }
 }

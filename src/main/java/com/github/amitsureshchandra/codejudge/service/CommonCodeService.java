@@ -33,8 +33,6 @@ public class CommonCodeService {
         dto.setInput(input);
         dto.setCompiler(compiler);
 
-        System.out.println(dto);
-
         // Define HTTP headers
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
