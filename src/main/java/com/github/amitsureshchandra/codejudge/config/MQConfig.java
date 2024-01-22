@@ -23,8 +23,9 @@ public class MQConfig {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory(@Value("${spring.rabbitmq.username}") String username, @Value("${spring.rabbitmq.password}") String password, @Value("${spring.rabbitmq.host}") String host) {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(host);
+    public ConnectionFactory connectionFactory(@Value("${spring.rabbitmq.username}") String username, @Value("${spring.rabbitmq.password}") String password, @Value("${spring.rabbitmq.host}") String host, @Value("${spring.rabbitmq.port}") int port) {
+        System.out.println("port : " + port);
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(host, port);
         connectionFactory.setUsername(username);
         connectionFactory.setPassword(password);
         return connectionFactory;

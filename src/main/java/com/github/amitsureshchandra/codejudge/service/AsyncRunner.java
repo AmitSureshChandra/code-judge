@@ -6,6 +6,7 @@ import com.github.amitsureshchandra.codejudge.dto.req.CodeRunReq;
 import com.github.amitsureshchandra.codejudge.service.util.ParseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,6 +21,9 @@ public class AsyncRunner {
     final ParseUtil parseUtil;
 
     final RabbitTemplate rabbitTemplate;
+
+    @Value("${spring.rabbitmq.port}")
+    int rmqPort;
 
     public AsyncRunner(UserService userService, CodeRunService codeRunService, ParseUtil parseUtil, RabbitTemplate rabbitTemplate) {
         this.userService = userService;
@@ -42,6 +46,7 @@ public class AsyncRunner {
     }
 
     private void addCodeEventInMQ(UUID codeExcId, String input, String sourceCode, String compiler) {
+        log.info("rmq port : {}", rmqPort);
         rabbitTemplate.convertAndSend(MQConfig.exchangeName,"code", parseUtil.parseToString(
                 new CodeEventDto(
                         codeExcId.toString(),

@@ -1,7 +1,6 @@
 package com.github.amitsureshchandra.codejudge.integration_test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.amitsureshchandra.codejudge.config.RMQConfig;
 import com.github.amitsureshchandra.codejudge.dto.req.CodeRunReq;
 import com.github.amitsureshchandra.codejudge.dto.resp.MsgResponseDto;
 import com.github.amitsureshchandra.codejudge.dto.resp.OutputStatusResp;
@@ -12,19 +11,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Slf4j
+@ActiveProfiles("mq_test")
 public class CodeRunTest extends BaseTestCase {
 
     // make sure online-compiler listener is running

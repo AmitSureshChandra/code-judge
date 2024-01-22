@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Profile;
 public class RMQConfig {
     @Bean
     Queue codeQueue() {
+        System.out.println("(((((((((((((((((");
+        System.out.println("Here");
         return new Queue(MQConfig.queueName);
     }
 
