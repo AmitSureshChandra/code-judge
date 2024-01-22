@@ -24,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Slf4j
@@ -85,6 +86,7 @@ public class CodeRunTest extends BaseTestCase {
             attemps--;
         }
 
+        assertEquals(OutputStatus.COMPLETED, outputStatusResp.getStatus());
         assertNotNull(outputStatusResp.getOutput());
         System.out.println(outputStatusResp.getOutput());
     }
