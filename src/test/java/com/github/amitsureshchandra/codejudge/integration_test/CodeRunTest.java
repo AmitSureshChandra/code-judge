@@ -1,6 +1,5 @@
 package com.github.amitsureshchandra.codejudge.integration_test;
 
-import com.github.amitsureshchandra.codejudge.config.RMQConfig;
 import com.github.amitsureshchandra.codejudge.dto.req.CodeRunReq;
 import com.github.amitsureshchandra.codejudge.dto.resp.MsgResponseDto;
 import com.github.amitsureshchandra.codejudge.dto.resp.OutputStatusResp;
@@ -11,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -30,8 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Slf4j
 @ActiveProfiles("mq_test")
 public class CodeRunTest extends BaseTestCase {
-
-    // make sure online-compiler listener is running
 
     @LocalServerPort
     int port;

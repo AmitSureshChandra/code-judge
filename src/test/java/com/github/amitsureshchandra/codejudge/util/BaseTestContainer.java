@@ -4,12 +4,10 @@ import com.redis.testcontainers.RedisContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.*;
 import org.testcontainers.utility.DockerImageName;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.time.Duration;
 
 @Slf4j
 public class BaseTestContainer {
@@ -25,6 +23,7 @@ public class BaseTestContainer {
     public static GenericContainer onlineCompiler = new GenericContainer(DockerImageName.parse("online-compiler-img:13.0"))
             .withExposedPorts(8090)
             .withNetwork(network)
+            .withStartupTimeout(Duration.ofSeconds(300))
             .withFileSystemBind(
                 "/var/run/docker.sock",
                     "/var/run/docker.sock",
