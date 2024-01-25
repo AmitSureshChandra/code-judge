@@ -5,7 +5,7 @@ import com.github.amitsureshchandra.leetcodeclone.dto.req.CodeSubmitReq;
 import com.github.amitsureshchandra.leetcodeclone.service.CodeSubmitService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.io.IOException;
 
 @RestController

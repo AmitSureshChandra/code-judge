@@ -46,7 +46,7 @@ public class AuthService {
 
     public LoginResp login(LoginReq loginReq) {
         Optional<User> userOptional = userRepo.findByUsernameAndPassword(loginReq.getUsername(), hashUtil.hash(loginReq.getPassword()));
-        if(!userOptional.isPresent()) throw new AuthException("Unauthenticated");
+        if(userOptional.isEmpty()) throw new AuthException("Unauthenticated");
         User user = userOptional.get();
         user.setToken(UUID.randomUUID());
         System.out.println(user);
@@ -56,7 +56,7 @@ public class AuthService {
 
     public void logout(UUID token) {
         Optional<User> optionalUser = userRepo.findByToken(token);
-        if(!optionalUser.isPresent()) throw new AuthException("Unauthenticated");
+        if(optionalUser.isEmpty()) throw new AuthException("Unauthenticated");
 
         User user = optionalUser.get();
 

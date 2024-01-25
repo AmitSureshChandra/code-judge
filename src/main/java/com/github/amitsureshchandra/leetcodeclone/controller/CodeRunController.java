@@ -5,7 +5,7 @@ import com.github.amitsureshchandra.leetcodeclone.dto.req.CodeRunReq;
 import com.github.amitsureshchandra.leetcodeclone.service.CodeRunService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
