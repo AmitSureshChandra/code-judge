@@ -7,10 +7,10 @@ import com.github.amitsureshchandra.leetcodeclone.entity.Question;
 import com.github.amitsureshchandra.leetcodeclone.enums.Difficulty;
 import com.github.amitsureshchandra.leetcodeclone.enums.Tag;
 import com.github.amitsureshchandra.leetcodeclone.repo.QuestionRepo;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
 @Component
