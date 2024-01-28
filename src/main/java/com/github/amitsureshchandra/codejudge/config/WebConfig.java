@@ -33,8 +33,11 @@ public class WebConfig implements WebMvcConfigurer {
                 boolean check = false;
                 try {
                     check = userService.isAuthenticated(UUID.fromString(request.getHeader("Authorization")));
-                }catch (Exception exception) {
+                } catch (Exception exception) {
                     exception.printStackTrace();
+                }
+                if (!check) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }
                 return HandlerInterceptor.super.preHandle(request, response, handler) && check;
             }

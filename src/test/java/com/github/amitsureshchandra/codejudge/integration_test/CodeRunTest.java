@@ -49,7 +49,7 @@ public class CodeRunTest extends BaseTestCase {
                         "        return fact;\n" +
                         "    }\n" +
                         "} ",
-                "jdk8",
+                "jdk",
                 Arrays.asList("0", "1", "6", "5")
         );
 

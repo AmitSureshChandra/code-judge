@@ -4,6 +4,8 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -12,15 +14,14 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class RMQConfig {
     @Bean
-    Queue codeQueue() {
-        System.out.println("(((((((((((((((((");
-        System.out.println("Here");
-        return new Queue(MQConfig.queueName);
+    Queue codeQueue(@Value("${mq-code-event-queue}") String queueName) {
+        System.out.println("1122345");
+        return new Queue(queueName);
     }
 
     @Bean
-    TopicExchange exchange() {
-        return new TopicExchange(MQConfig.exchangeName);
+    TopicExchange exchange( @Value("${mq-code-event-exchange}") String exchangeName) {
+        return new TopicExchange(exchangeName);
     }
 
     @Bean

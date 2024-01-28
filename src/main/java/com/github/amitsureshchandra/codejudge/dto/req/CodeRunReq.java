@@ -8,9 +8,12 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class CodeRunReq {
     private String code;
     private String compiler;
     private List<String> testCases;
+
+    public CodeRunReq() {
+
+    }
 }

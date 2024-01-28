@@ -31,7 +31,7 @@ public class ParseUtil {
         }
     }
 
-    public <T>String parseToString(T obj) {
+    public String parseToString(Object obj) {
         try {
             return objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {

@@ -22,6 +22,9 @@ public class AsyncRunner {
 
     final RabbitTemplate rabbitTemplate;
 
+    @Value("${mq-code-event-exchange}")
+    public String exchangeName;
+
     @Value("${spring.rabbitmq.port}")
     int rmqPort;
 
@@ -47,7 +50,7 @@ public class AsyncRunner {
 
     private void addCodeEventInMQ(UUID codeExcId, String input, String sourceCode, String compiler) {
         log.info("rmq port : {}", rmqPort);
-        rabbitTemplate.convertAndSend(MQConfig.exchangeName,"code", parseUtil.parseToString(
+        rabbitTemplate.convertAndSend(exchangeName,"code", parseUtil.parseToString(
                 new CodeEventDto(
                         codeExcId.toString(),
                         sourceCode,

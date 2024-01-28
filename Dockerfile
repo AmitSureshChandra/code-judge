@@ -25,6 +25,8 @@ ENV MQ_PORT=5672
 ENV REDIS_HOST=127.0.0.1
 ENV REDIS_PORT=6379
 ENV SECRET_TOKEN=my-secret-no-secret
+ENV COMPILER_TMP_FOLDER=/opt/app/temp/
+ENV HOST_TMP_FOLDER=/home/amit/tmp/
 
 EXPOSE 8080
 COPY --from=builder /opt/app/target/*.jar /opt/app/*.jar

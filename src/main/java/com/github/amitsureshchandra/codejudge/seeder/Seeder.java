@@ -75,7 +75,7 @@ public class Seeder {
         q.setSampleCodes(Arrays.asList(
                 new SampleCode(
                     "class Problem  { \nint add(int n1, int n2) { \n// write code here \n } \n} ",
-                    "jdk8"
+                    "jdk"
                 )
         ));
 
@@ -118,7 +118,7 @@ public class Seeder {
         q.setSampleCodes(Arrays.asList(
                 new SampleCode(
                         "class Problem  { \nlong factorial(int n) { \n// write code here \n } \n} ",
-                        "jdk8"
+                        "jdk"
                 )
         ));
         questionRepo.save(q);

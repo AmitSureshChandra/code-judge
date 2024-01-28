@@ -87,7 +87,7 @@ public class CodeRunService {
 
     public String getRunDriverPath(String code, String compiler) throws IOException {
         switch (compiler) {
-            case "jdk8":
+            case "jdk":
                 return Objects.requireNonNull(resourceLoader.getResource("classpath:drivers\\lang\\" + compiler + "\\" + code + "\\RunDriver.java")).getFile().getPath();
             case "golang12":
                 return Objects.requireNonNull(resourceLoader.getResource("classpath:drivers\\lang\\" + compiler + "\\" + code + "\\run_driver.go")).getFile().getPath();

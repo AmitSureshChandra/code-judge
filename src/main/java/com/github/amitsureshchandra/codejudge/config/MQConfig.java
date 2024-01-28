@@ -14,9 +14,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MQConfig {
-    public final static String queueName = "code-queue";
-    public final static String exchangeName = "exchange";
-
     @Bean
     MessageConverter msgConverter() {
         return new Jackson2JsonMessageConverter();
